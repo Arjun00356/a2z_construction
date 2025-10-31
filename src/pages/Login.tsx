@@ -4,28 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useAuth } from "@/contexts/AuthContext";
-import { Loader2 } from "lucide-react";
 import loginBg from "@/assets/login-bg.jpg";
 import logo from "@/assets/a2z-logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  if (user) {
-    navigate("/dashboard");
-    return null;
-  }
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    await signIn(email, password);
-    setLoading(false);
+    navigate("/home");
   };
 
   return (
@@ -75,9 +64,8 @@ const Login = () => {
             <Button 
               type="submit" 
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-[var(--transition-smooth)] shadow-[var(--shadow-soft)]"
-              disabled={loading}
             >
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Login'}
+              Login
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">

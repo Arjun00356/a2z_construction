@@ -33,7 +33,7 @@ const SignUp = () => {
       <Card className="w-full max-w-md relative z-10 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/95 animate-scale-in">
         <CardHeader className="space-y-2 text-center pb-8">
           <div className="flex items-center justify-center mb-4">
-            <img src={logo} alt="A2Z Construction" className="h-20 w-auto" />
+            <img src={logo} alt="A2Z Construction" className="h-24 w-auto" />
           </div>
           <h2 className="text-2xl font-semibold text-foreground">Create Account</h2>
           <p className="text-muted-foreground text-sm">Join A2Z Construction today</p>

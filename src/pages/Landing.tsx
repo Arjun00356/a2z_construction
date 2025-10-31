@@ -15,7 +15,7 @@ const Landing = () => {
       
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-8">
         <div className="inline-block mb-4 animate-scale-in">
-          <img src={logo} alt="A2Z Construction" className="h-32 w-auto mx-auto" />
+          <img src={logo} alt="A2Z Construction" className="h-40 w-auto mx-auto" />
         </div>
         
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight animate-fade-in-up">

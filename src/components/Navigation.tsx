@@ -42,10 +42,15 @@ const Navigation = () => {
         </div>
         
         <div className="flex items-center gap-4">
+          <div className="hidden lg:flex flex-col text-right text-xs">
+            <span className="text-muted-foreground">+91 8770122794 - Mr. Arjun Mishra</span>
+            <span className="text-muted-foreground">+91 8949930566</span>
+          </div>
           <Button 
             variant="ghost" 
             size="sm"
             className="hidden md:flex items-center gap-2"
+            onClick={() => window.location.href = 'tel:+918770122794'}
           >
             <Phone className="w-4 h-4" />
             <span className="uppercase text-xs tracking-wider">Call</span>

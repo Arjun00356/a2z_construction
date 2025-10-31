@@ -1,31 +1,33 @@
 import { Palette, Hammer, ClipboardCheck, Wrench, RefreshCcw } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import interiorImg from "@/assets/service-interior.jpg";
+import constructionImg from "@/assets/service-construction.jpg";
+import consultancyImg from "@/assets/service-consultancy.jpg";
+import retrofittingImg from "@/assets/service-retrofitting.jpg";
 
 const services = [
   {
     icon: Palette,
     title: "Interior Design",
-    description: "Transform spaces with innovative and sustainable interior design solutions tailored to your needs."
+    description: "Transform spaces with innovative and sustainable interior design solutions tailored to your needs.",
+    image: interiorImg
   },
   {
     icon: Hammer,
     title: "Construction Management",
-    description: "Comprehensive project management ensuring timely delivery and quality control at every stage."
+    description: "Comprehensive project management ensuring timely delivery and quality control at every stage.",
+    image: constructionImg
   },
   {
     icon: ClipboardCheck,
     title: "Consultancy",
-    description: "Expert consultation services to guide your construction projects from concept to completion."
-  },
-  {
-    icon: RefreshCcw,
-    title: "Retrofitting",
-    description: "Upgrade existing structures with modern, energy-efficient, and sustainable solutions."
+    description: "Expert consultation services to guide your construction projects from concept to completion.",
+    image: consultancyImg
   },
   {
     icon: Wrench,
-    title: "Repairs & Maintenance",
-    description: "Professional repair and maintenance services to keep your property in optimal condition."
+    title: "Retrofitting",
+    description: "Upgrade existing structures with modern, energy-efficient, and sustainable solutions.",
+    image: retrofittingImg
   }
 ];
 
@@ -41,19 +43,26 @@ const Services = () => {
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.slice(0, 4).map((service, index) => {
+          {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <div 
                 key={index}
                 className="group cursor-pointer"
               >
-                <div className="aspect-square bg-background mb-6 flex items-center justify-center border border-border group-hover:border-primary/50 transition-colors">
-                  <Icon className="w-12 h-12 text-primary" />
+                <div className="aspect-square bg-background mb-6 overflow-hidden border border-border group-hover:border-primary/50 transition-colors">
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <h3 className="text-lg font-light mb-3 uppercase tracking-wide">
-                  {service.title}
-                </h3>
+                <div className="flex items-center gap-3 mb-3">
+                  <Icon className="w-6 h-6 text-primary" />
+                  <h3 className="text-lg font-light uppercase tracking-wide">
+                    {service.title}
+                  </h3>
+                </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {service.description}
                 </p>

@@ -33,6 +33,7 @@ const Contact = () => {
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
             LET'S BUILD TOGETHER
           </h2>
+          <p className="text-muted-foreground text-sm">Email: <a href="mailto:A2Z@GMAIL.COM" className="text-primary hover:underline">A2Z@GMAIL.COM</a></p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">

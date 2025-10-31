@@ -1,13 +1,18 @@
+import project1 from "@/assets/project-1.jpg";
+import project2 from "@/assets/project-2.jpg";
+
 const projects = [
   {
     title: "A2Z Green Towers",
     subtitle: "Sustainable Living Spaces",
-    description: "Eco-friendly residential complex with modern amenities"
+    description: "Eco-friendly residential complex with modern amenities",
+    image: project1
   },
   {
     title: "Smart Office Hub",
     subtitle: "Next-Gen Workspaces",
-    description: "Intelligent commercial spaces for the future of work"
+    description: "Intelligent commercial spaces for the future of work",
+    image: project2
   }
 ];
 
@@ -28,21 +33,30 @@ const LatestProjects = () => {
           
           <div className="space-y-8">
             {projects.map((project, index) => (
-              <div key={index} className="border-t border-border pt-8">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-light tracking-wide">
-                    {project.title.toUpperCase()}
-                  </h3>
-                  <span className="text-xs bg-foreground text-background px-3 py-1">
-                    Featured-Image-{index + 1}
-                  </span>
+              <div key={index} className="group cursor-pointer">
+                <div className="aspect-video mb-6 overflow-hidden">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <p className="text-sm uppercase tracking-wider text-muted-foreground mb-2">
-                  {project.subtitle}
-                </p>
-                <p className="text-muted-foreground">
-                  {project.description}
-                </p>
+                <div className="border-t border-border pt-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-2xl font-light tracking-wide">
+                      {project.title.toUpperCase()}
+                    </h3>
+                    <span className="text-xs bg-foreground text-background px-3 py-1">
+                      Featured-Image-{index + 1}
+                    </span>
+                  </div>
+                  <p className="text-sm uppercase tracking-wider text-muted-foreground mb-2">
+                    {project.subtitle}
+                  </p>
+                  <p className="text-muted-foreground">
+                    {project.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

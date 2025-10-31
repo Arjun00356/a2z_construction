@@ -1,25 +1,33 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import project1 from "@/assets/project-1.jpg";
+import project2 from "@/assets/project-2.jpg";
+import project3 from "@/assets/project-3.jpg";
+import project4 from "@/assets/project-4.jpg";
 
 const projects = [
   {
     title: "A2Z CONSTRUCTION CENTRE",
     subtitle: "WHERE THE FUTURE OF CONSTRUCTION TAKES SHAPE.",
-    description: "Modern Construction Office spaces"
+    description: "Modern Construction Office spaces",
+    image: project1
   },
   {
     title: "ELITE RESIDENCE",
     subtitle: "AN OASIS OF LUXURY",
-    description: "3 & 4 BHK residences"
+    description: "3 & 4 BHK residences",
+    image: project2
   },
   {
     title: "URBAN ASCENT, DOWNTOWN",
     subtitle: "RISE ABOVE THE ORDINARY",
-    description: "3 & 4 BHK residences"
+    description: "3 & 4 BHK residences",
+    image: project3
   },
   {
     title: "GREEN VALLEY",
     subtitle: "A MEANINGFUL LIFE STARTS HERE.",
-    description: "2,3 & 4 BHK Residences"
+    description: "2,3 & 4 BHK Residences",
+    image: project4
   }
 ];
 
@@ -48,6 +56,11 @@ const FeaturedProjects = () => {
           {projects.map((project, index) => (
             <div key={index} className="group cursor-pointer">
               <div className="aspect-[3/4] bg-muted mb-6 relative overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <h3 className="text-xl font-light mb-2 tracking-wide">

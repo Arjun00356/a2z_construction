@@ -29,13 +29,21 @@ const Landing = () => {
           Sustainable and innovative construction solutions for a better tomorrow
         </p>
         
-        <div className="pt-8">
+        <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             size="lg"
             onClick={() => navigate("/login")}
             className="text-lg px-12 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)] hover:scale-105"
           >
-            Login to Get Started
+            Login
+          </Button>
+          <Button 
+            size="lg"
+            onClick={() => navigate("/signup")}
+            variant="outline"
+            className="text-lg px-12 py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)] hover:scale-105"
+          >
+            Sign Up
           </Button>
         </div>
       </div>

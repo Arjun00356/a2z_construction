@@ -6,13 +6,19 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import loginBg from "@/assets/login-bg.jpg";
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
     navigate("/home");
   };
 
@@ -30,12 +36,25 @@ const Login = () => {
               <h1 className="text-3xl font-bold text-primary-foreground tracking-tight">A2Z</h1>
             </div>
           </div>
-          <h2 className="text-2xl font-semibold text-foreground">A2Z Construction</h2>
-          <p className="text-muted-foreground text-sm">Building Smarter. Building Greener.</p>
+          <h2 className="text-2xl font-semibold text-foreground">Create Account</h2>
+          <p className="text-muted-foreground text-sm">Join A2Z Construction today</p>
         </CardHeader>
         
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleSignUp} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-foreground">Full Name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]"
+              />
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="email" className="text-foreground">Email</Label>
               <Input
@@ -61,22 +80,35 @@ const Login = () => {
                 className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]"
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword" className="text-foreground">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]"
+              />
+            </div>
             
             <Button 
               type="submit" 
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-[var(--transition-smooth)] shadow-[var(--shadow-soft)]"
             >
-              Login
+              Sign Up
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <button
                 type="button"
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/login")}
                 className="text-primary hover:underline font-medium"
               >
-                Sign up here
+                Login here
               </button>
             </p>
           </form>
@@ -86,4 +118,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

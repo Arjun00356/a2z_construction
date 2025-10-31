@@ -28,7 +28,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-24 px-6 bg-background">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Contact</p>
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
             LET'S BUILD TOGETHER
@@ -36,7 +36,7 @@ const Contact = () => {
           <p className="text-muted-foreground text-sm">Email: <a href="mailto:A2Z@GMAIL.COM" className="text-primary hover:underline">A2Z@GMAIL.COM</a></p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-xs uppercase tracking-wider">Name</Label>

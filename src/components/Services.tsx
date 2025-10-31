@@ -35,7 +35,7 @@ const Services = () => {
   return (
     <section id="services" className="py-24 px-6 bg-muted/30">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Services</p>
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
             OUR EXPERTISE
@@ -48,7 +48,8 @@ const Services = () => {
             return (
               <div 
                 key={index}
-                className="group cursor-pointer"
+                className="group cursor-pointer animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="aspect-square bg-background mb-6 overflow-hidden border border-border group-hover:border-primary/50 transition-colors">
                   <img 

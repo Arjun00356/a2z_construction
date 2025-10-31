@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import loginBg from "@/assets/login-bg.jpg";
+import logo from "@/assets/a2z-logo.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -29,12 +30,10 @@ const SignUp = () => {
     >
       <div className="absolute inset-0 bg-background/40 backdrop-blur-sm" />
       
-      <Card className="w-full max-w-md relative z-10 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/95">
+      <Card className="w-full max-w-md relative z-10 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/95 animate-scale-in">
         <CardHeader className="space-y-2 text-center pb-8">
           <div className="flex items-center justify-center mb-4">
-            <div className="bg-primary rounded-lg p-4">
-              <h1 className="text-3xl font-bold text-primary-foreground tracking-tight">A2Z</h1>
-            </div>
+            <img src={logo} alt="A2Z Construction" className="h-20 w-auto" />
           </div>
           <h2 className="text-2xl font-semibold text-foreground">Create Account</h2>
           <p className="text-muted-foreground text-sm">Join A2Z Construction today</p>

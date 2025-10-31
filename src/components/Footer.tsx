@@ -1,4 +1,5 @@
 import { Facebook, Youtube, Instagram } from "lucide-react";
+import logo from "@/assets/a2z-logo.png";
 
 const Footer = () => {
   return (
@@ -6,8 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-4xl font-light mb-2">A2Z</h2>
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">Construction</p>
+            <img src={logo} alt="A2Z Construction" className="h-16 w-auto mb-4" />
           </div>
           
           <div className="flex flex-col items-start md:items-end gap-6">

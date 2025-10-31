@@ -35,7 +35,7 @@ const FeaturedProjects = () => {
   return (
     <section className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-12">
+        <div className="flex items-center justify-between mb-12 animate-fade-in">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Projects</p>
             <h2 className="text-4xl md:text-5xl font-light tracking-tight">
@@ -54,7 +54,11 @@ const FeaturedProjects = () => {
         
         <div className="grid md:grid-cols-4 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="group cursor-pointer">
+            <div 
+              key={index} 
+              className="group cursor-pointer animate-fade-in-up"
+              style={{ animationDelay: `${index * 0.15}s` }}
+            >
               <div className="aspect-[3/4] bg-muted mb-6 relative overflow-hidden">
                 <img 
                   src={project.image} 

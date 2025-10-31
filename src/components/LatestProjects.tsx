@@ -21,7 +21,7 @@ const LatestProjects = () => {
     <section id="projects" className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16">
-          <div>
+          <div className="animate-slide-in-left">
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Projects</p>
             <h2 className="text-5xl md:text-6xl font-light mb-8 tracking-tight">
               LATEST LAUNCHES
@@ -31,9 +31,13 @@ const LatestProjects = () => {
             </p>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-8 animate-slide-in-right">
             {projects.map((project, index) => (
-              <div key={index} className="group cursor-pointer">
+              <div 
+                key={index} 
+                className="group cursor-pointer animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
                 <div className="aspect-video mb-6 overflow-hidden">
                   <img 
                     src={project.image} 

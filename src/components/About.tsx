@@ -3,7 +3,7 @@ const About = () => {
     <section id="about" className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
+          <div className="animate-slide-in-left">
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">About</p>
             <h2 className="text-5xl md:text-6xl font-light mb-8 tracking-tight">
               BUILDING SMARTER.<br />
@@ -11,7 +11,7 @@ const About = () => {
             </h2>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-8 animate-slide-in-right">
             <div>
               <h3 className="text-xl font-light mb-4 uppercase tracking-wide">Our Mission</h3>
               <p className="text-muted-foreground leading-relaxed">

@@ -15,7 +15,7 @@ const Newsletter = () => {
   return (
     <section className="py-16 px-6 bg-muted/30">
       <div className="max-w-7xl mx-auto">
-        <form onSubmit={handleSubscribe} className="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <form onSubmit={handleSubscribe} className="flex flex-col md:flex-row gap-4 items-center justify-between animate-fade-in">
           <p className="text-foreground text-lg">
             Sign up to receive exclusive news and offers about the latest launches
           </p>

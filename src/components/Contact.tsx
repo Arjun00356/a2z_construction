@@ -9,92 +9,81 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     message: ""
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success("Thank you for your message! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setFormData({ name: "", email: "", message: "" });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
-    <section id="contact" className="py-20 px-4 bg-gradient-to-b from-secondary/30 to-background">
-      <div className="max-w-2xl mx-auto space-y-8 animate-fade-in">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Get In <span className="text-primary">Touch</span>
+    <section id="contact" className="py-24 px-6 bg-background">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Contact</p>
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
+            LET'S BUILD TOGETHER
           </h2>
-          <div className="h-1 w-24 bg-accent mx-auto rounded-full" />
-          <p className="text-muted-foreground">
-            Ready to start your next project? Contact us today for a consultation.
-          </p>
         </div>
-        
-        <form onSubmit={handleSubmit} className="space-y-6 p-8 rounded-xl bg-card shadow-[var(--shadow-card)] border border-border">
-          <div className="grid md:grid-cols-2 gap-6">
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-foreground">Name</Label>
+              <Label htmlFor="name" className="text-xs uppercase tracking-wider">Name</Label>
               <Input
                 id="name"
-                placeholder="Your name"
+                name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]"
+                className="bg-background border-border border-t-0 border-l-0 border-r-0 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-foreground">Email</Label>
+              <Label htmlFor="email" className="text-xs uppercase tracking-wider">Email</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
-                placeholder="your.email@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]"
+                className="bg-background border-border border-t-0 border-l-0 border-r-0 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary"
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-foreground">Phone</Label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="+1 (555) 000-0000"
-              value={formData.phone}
-              onChange={handleChange}
-              className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]"
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="message" className="text-foreground">Message</Label>
+            <Label htmlFor="message" className="text-xs uppercase tracking-wider">Message</Label>
             <Textarea
               id="message"
-              placeholder="Tell us about your project..."
+              name="message"
               value={formData.message}
               onChange={handleChange}
               required
               rows={5}
-              className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)] resize-none"
+              className="bg-background border-border border-t-0 border-l-0 border-r-0 rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary resize-none"
             />
           </div>
-          
-          <Button 
-            type="submit"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)] hover:scale-[1.02]"
-          >
-            Send Message
-          </Button>
+
+          <div className="flex justify-center pt-4">
+            <Button 
+              type="submit" 
+              className="bg-foreground hover:bg-foreground/90 text-background uppercase text-xs tracking-wider px-12"
+            >
+              Send Message
+            </Button>
+          </div>
         </form>
       </div>
     </section>

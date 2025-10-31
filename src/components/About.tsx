@@ -1,40 +1,35 @@
 const About = () => {
   return (
-    <section id="about" className="py-20 px-4 bg-gradient-to-b from-background to-secondary/30">
-      <div className="max-w-4xl mx-auto space-y-12 animate-fade-in">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            About <span className="text-primary">A2Z Construction</span>
-          </h2>
-          <div className="h-1 w-24 bg-accent mx-auto rounded-full" />
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-4 p-8 rounded-xl bg-card shadow-[var(--shadow-card)] border border-border hover:shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)]">
-            <h3 className="text-2xl font-semibold text-primary">Our Mission</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              To revolutionize the construction industry through sustainable practices, innovative solutions, 
-              and unwavering commitment to quality. We build structures that stand the test of time while 
-              protecting our planet for future generations.
-            </p>
+    <section id="about" className="py-24 px-6 bg-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">About</p>
+            <h2 className="text-5xl md:text-6xl font-light mb-8 tracking-tight">
+              BUILDING SMARTER.<br />
+              BUILDING GREENER.
+            </h2>
           </div>
           
-          <div className="space-y-4 p-8 rounded-xl bg-card shadow-[var(--shadow-card)] border border-border hover:shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)]">
-            <h3 className="text-2xl font-semibold text-primary">Our Vision</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              To be the leading construction company recognized for excellence in sustainable building practices, 
-              delivering innovative solutions that exceed client expectations while minimizing environmental impact.
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-xl font-light mb-4 uppercase tracking-wide">Our Mission</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                To revolutionize the construction industry through sustainable practices and innovative solutions that create lasting value for our clients and communities.
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-light mb-4 uppercase tracking-wide">Our Vision</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                To be the leading sustainable construction company, setting new standards in eco-friendly building practices and delivering excellence in every project.
+              </p>
+            </div>
+            
+            <p className="text-muted-foreground leading-relaxed pt-4 border-t border-border">
+              With years of experience in the construction industry, A2Z Construction has built a reputation for excellence, reliability, and innovation. We specialize in sustainable building practices, cutting-edge design, and comprehensive project management.
             </p>
           </div>
-        </div>
-        
-        <div className="p-8 rounded-xl bg-card shadow-[var(--shadow-card)] border border-border">
-          <p className="text-center text-lg text-foreground leading-relaxed">
-            With years of experience in the construction industry, A2Z Construction has built a reputation 
-            for delivering high-quality projects on time and within budget. Our team of skilled professionals 
-            is dedicated to transforming your vision into reality through comprehensive services ranging from 
-            interior design to complete construction management.
-          </p>
         </div>
       </div>
     </section>

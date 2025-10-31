@@ -31,38 +31,33 @@ const services = [
 
 const Services = () => {
   return (
-    <section className="py-20 px-4 bg-background">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <div className="text-center space-y-4 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Our <span className="text-primary">Services</span>
+    <section id="services" className="py-24 px-6 bg-muted/30">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Services</p>
+          <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
+            OUR EXPERTISE
           </h2>
-          <div className="h-1 w-24 bg-accent mx-auto rounded-full" />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive construction solutions designed to meet all your building needs
-          </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => {
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {services.slice(0, 4).map((service, index) => {
             const Icon = service.icon;
             return (
-              <Card 
+              <div 
                 key={index}
-                className="group border-border hover:border-primary/50 transition-[var(--transition-smooth)] hover:shadow-[var(--shadow-card)] hover:-translate-y-1 bg-card"
+                className="group cursor-pointer"
               >
-                <CardHeader>
-                  <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-[var(--transition-smooth)]">
-                    <Icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl text-foreground">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-muted-foreground">
-                    {service.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                <div className="aspect-square bg-background mb-6 flex items-center justify-center border border-border group-hover:border-primary/50 transition-colors">
+                  <Icon className="w-12 h-12 text-primary" />
+                </div>
+                <h3 className="text-lg font-light mb-3 uppercase tracking-wide">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
             );
           })}
         </div>

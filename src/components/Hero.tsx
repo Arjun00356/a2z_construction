@@ -10,43 +10,18 @@ const Hero = () => {
   return (
     <>
       <section 
-        className="relative min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        className="relative h-screen flex items-end bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBg})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
         
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto space-y-8 animate-fade-in">
-          <div className="inline-block bg-primary rounded-lg p-6 mb-4 shadow-[var(--shadow-card)]">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground">A2Z Construction</h1>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20 animate-fade-in">
+          <div className="text-background/10 text-8xl md:text-9xl font-bold mb-4">
+            A2Z
           </div>
-          
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
-            Building Smarter.
-            <br />
-            <span className="text-primary">Building Greener.</span>
-          </h2>
-          
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Sustainable and innovative construction solutions for a better tomorrow
-          </p>
-          
-          <div className="flex gap-4 justify-center flex-wrap pt-4">
-            <Button 
-              size="lg" 
-              onClick={() => setShowServiceDialog(true)}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)] hover:scale-105"
-            >
-              Get Started
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-              className="border-primary text-primary hover:bg-primary/10 transition-[var(--transition-smooth)] hover:scale-105"
-            >
-              Learn More
-            </Button>
-          </div>
+          <h1 className="text-2xl md:text-3xl font-light text-foreground mb-4 tracking-wide">
+            CONSTRUCTION
+          </h1>
         </div>
       </section>
 

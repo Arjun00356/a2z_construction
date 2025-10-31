@@ -4,23 +4,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import loginBg from "@/assets/login-bg.jpg";
 import logo from "@/assets/a2z-logo.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { signUp, user } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignUp = (e: React.FormEvent) => {
+  if (user) {
+    navigate("/dashboard");
+    return null;
+  }
+
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords don't match");
       return;
     }
-    navigate("/home");
+    setLoading(true);
+    await signUp(email, password, name);
+    setLoading(false);
   };
 
   return (
@@ -96,8 +108,9 @@ const SignUp = () => {
             <Button 
               type="submit" 
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-[var(--transition-smooth)] shadow-[var(--shadow-soft)]"
+              disabled={loading}
             >
-              Sign Up
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign Up'}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground">

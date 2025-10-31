@@ -62,6 +62,14 @@ const Navigation = () => {
           >
             Get in Touch
           </Button>
+          <Button 
+            size="sm"
+            variant="outline"
+            onClick={() => window.location.href = '/login'}
+            className="uppercase text-xs tracking-wider px-6"
+          >
+            Login
+          </Button>
         </div>
       </div>
     </nav>

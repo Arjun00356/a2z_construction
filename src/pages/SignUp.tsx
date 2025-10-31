@@ -21,7 +21,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/home");
+      navigate("/dashboard");
     }
   }, [user, navigate]);
 
@@ -50,7 +50,7 @@ const SignUp = () => {
         title: "Success",
         description: "Account created successfully!",
       });
-      navigate("/home");
+      navigate("/dashboard");
     }
     setLoading(false);
   };

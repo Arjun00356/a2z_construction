@@ -36,7 +36,7 @@ const Login = () => {
         variant: "destructive",
       });
     } else {
-      navigate("/home");
+      navigate("/dashboard");
     }
     setLoading(false);
   };

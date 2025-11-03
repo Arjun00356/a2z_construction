@@ -112,9 +112,10 @@ export const ProjectsSection = () => {
       };
 
       if (editingProject) {
+        const { created_by, ...updateData } = projectData;
         const { error } = await supabase
           .from('projects')
-          .update(projectData)
+          .update(updateData)
           .eq('id', editingProject.id);
 
         if (error) throw error;

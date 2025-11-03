@@ -55,7 +55,7 @@ const Consultancy = () => {
                 <Button size="lg" onClick={() => navigate("/contact")}>
                   Book Consultation
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" onClick={() => navigate("/#about")}>
                   Download Brochure
                 </Button>
               </div>

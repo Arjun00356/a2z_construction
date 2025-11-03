@@ -55,7 +55,7 @@ const Retrofitting = () => {
                 <Button size="lg" onClick={() => navigate("/contact")}>
                   Get Site Assessment
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" onClick={() => navigate("/#projects")}>
                   Case Studies
                 </Button>
               </div>

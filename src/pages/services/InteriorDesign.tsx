@@ -55,7 +55,7 @@ const InteriorDesign = () => {
                 <Button size="lg" onClick={() => navigate("/contact")}>
                   Get Free Consultation
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" onClick={() => navigate("/#projects")}>
                   View Portfolio
                 </Button>
               </div>

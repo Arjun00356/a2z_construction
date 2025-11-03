@@ -55,7 +55,7 @@ const ConstructionManagement = () => {
                 <Button size="lg" onClick={() => navigate("/contact")}>
                   Request Quotation
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" onClick={() => navigate("/#projects")}>
                   View Projects
                 </Button>
               </div>

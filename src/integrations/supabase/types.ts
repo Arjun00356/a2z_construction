@@ -498,6 +498,82 @@ export type Database = {
           },
         ]
       }
+      ncr_reports: {
+        Row: {
+          assigned_to: string | null
+          category: string
+          closed_at: string | null
+          corrective_action: string | null
+          created_at: string
+          description: string
+          id: string
+          ncr_number: string
+          project_id: string
+          raised_at: string
+          raised_by: string
+          root_cause: string | null
+          severity: string
+          status: string
+          title: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          category: string
+          closed_at?: string | null
+          corrective_action?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          ncr_number: string
+          project_id: string
+          raised_at?: string
+          raised_by: string
+          root_cause?: string | null
+          severity?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          assigned_to?: string | null
+          category?: string
+          closed_at?: string | null
+          corrective_action?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          ncr_number?: string
+          project_id?: string
+          raised_at?: string
+          raised_by?: string
+          root_cause?: string | null
+          severity?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ncr_reports_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_reports_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ncr_reports_raised_by_fkey"
+            columns: ["raised_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount: number
@@ -798,6 +874,133 @@ export type Database = {
           },
         ]
       }
+      quality_forms: {
+        Row: {
+          created_at: string
+          description: string | null
+          form_type: string
+          id: string
+          project_id: string
+          reference_number: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submitted_at: string
+          submitted_by: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          form_type: string
+          id?: string
+          project_id: string
+          reference_number: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          submitted_by: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          form_type?: string
+          id?: string
+          project_id?: string
+          reference_number?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          submitted_by?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quality_forms_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quality_forms_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quality_forms_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_audits: {
+        Row: {
+          action_at: string | null
+          action_by: string | null
+          action_taken: boolean
+          audit_date: string
+          audit_type: string
+          auditor_name: string
+          corrective_action: string | null
+          created_at: string
+          findings: string
+          id: string
+          project_id: string
+          severity: string
+        }
+        Insert: {
+          action_at?: string | null
+          action_by?: string | null
+          action_taken?: boolean
+          audit_date: string
+          audit_type: string
+          auditor_name: string
+          corrective_action?: string | null
+          created_at?: string
+          findings: string
+          id?: string
+          project_id: string
+          severity?: string
+        }
+        Update: {
+          action_at?: string | null
+          action_by?: string | null
+          action_taken?: boolean
+          audit_date?: string
+          audit_type?: string
+          auditor_name?: string
+          corrective_action?: string | null
+          created_at?: string
+          findings?: string
+          id?: string
+          project_id?: string
+          severity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_audits_action_by_fkey"
+            columns: ["action_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "safety_audits_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       safety_checklists: {
         Row: {
           completed: boolean
@@ -839,6 +1042,63 @@ export type Database = {
           },
           {
             foreignKeyName: "safety_checklists_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_inspections: {
+        Row: {
+          area: string
+          completed: boolean
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          findings: string | null
+          id: string
+          inspection_date: string
+          inspector_name: string
+          project_id: string
+          status: string
+        }
+        Insert: {
+          area: string
+          completed?: boolean
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          findings?: string | null
+          id?: string
+          inspection_date: string
+          inspector_name: string
+          project_id: string
+          status?: string
+        }
+        Update: {
+          area?: string
+          completed?: boolean
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          findings?: string | null
+          id?: string
+          inspection_date?: string
+          inspector_name?: string
+          project_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "site_inspections_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "site_inspections_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"

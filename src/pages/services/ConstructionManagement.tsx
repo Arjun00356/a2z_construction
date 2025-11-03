@@ -52,7 +52,7 @@ const ConstructionManagement = () => {
                 Indian construction with locally sourced materials and skilled workforce.
               </p>
               <div className="flex gap-4">
-                <Button size="lg" onClick={() => navigate("/contact")}>
+                <Button size="lg" onClick={() => navigate("/#contact")}>
                   Request Quotation
                 </Button>
                 <Button size="lg" variant="outline" onClick={() => navigate("/#projects")}>

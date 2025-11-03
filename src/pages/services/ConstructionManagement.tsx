@@ -52,10 +52,27 @@ const ConstructionManagement = () => {
                 Indian construction with locally sourced materials and skilled workforce.
               </p>
               <div className="flex gap-4">
-                <Button size="lg" onClick={() => navigate("/#contact")}>
+                <Button 
+                  size="lg"
+                  onClick={() => {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                  }}
+                >
                   Request Quotation
                 </Button>
-                <Button size="lg" variant="outline" onClick={() => navigate("/#projects")}>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                  }}
+                >
                   View Projects
                 </Button>
               </div>

@@ -52,10 +52,27 @@ const Consultancy = () => {
                 bring decades of experience in residential, commercial, and industrial projects.
               </p>
               <div className="flex gap-4">
-                <Button size="lg" onClick={() => navigate("/#contact")}>
+                <Button 
+                  size="lg"
+                  onClick={() => {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                  }}
+                >
                   Book Consultation
                 </Button>
-                <Button size="lg" variant="outline" onClick={() => navigate("/#about")}>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                  }}
+                >
                   Learn More
                 </Button>
               </div>

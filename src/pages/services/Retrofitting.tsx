@@ -52,10 +52,27 @@ const Retrofitting = () => {
                 retrofitting, and green building conversions compliant with Indian building codes.
               </p>
               <div className="flex gap-4">
-                <Button size="lg" onClick={() => navigate("/#contact")}>
+                <Button 
+                  size="lg"
+                  onClick={() => {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                  }}
+                >
                   Get Site Assessment
                 </Button>
-                <Button size="lg" variant="outline" onClick={() => navigate("/#projects")}>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  onClick={() => {
+                    navigate("/");
+                    setTimeout(() => {
+                      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                    }, 100);
+                  }}
+                >
                   Case Studies
                 </Button>
               </div>

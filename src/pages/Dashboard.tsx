@@ -65,19 +65,19 @@ const Dashboard = () => {
   }
 
   const menuItems = [
-    { id: "overview", title: "Overview", icon: LayoutDashboard },
+    { id: "overview", title: "Dashboard Overview", icon: LayoutDashboard },
     { id: "projects", title: "Projects", icon: FolderKanban },
     { id: "tasks", title: "Tasks", icon: CheckSquare },
     { id: "documents", title: "Documents", icon: FileText },
-    { id: "budget", title: "Budget", icon: DollarSign },
+    { id: "budget", title: "Budget & Expenses", icon: DollarSign },
     { id: "equipment", title: "Equipment", icon: Truck },
     { id: "materials", title: "Materials", icon: Package },
-    { id: "tickets", title: "Tickets", icon: Ticket },
+    { id: "tickets", title: "Support Tickets", icon: Ticket },
     { id: "payments", title: "Payments", icon: CreditCard },
-    { id: "safety", title: "Safety", icon: ShieldAlert },
+    { id: "safety", title: "Safety Compliance", icon: ShieldAlert },
     { id: "incidents", title: "Incidents", icon: AlertTriangle },
     { id: "milestones", title: "Milestones", icon: Flag },
-    { id: "team", title: "Team", icon: Users },
+    { id: "team", title: "Team Directory", icon: Users },
   ];
 
   const renderContent = () => {
@@ -115,7 +115,7 @@ const Dashboard = () => {
                 Welcome to A2Z Construction
               </h2>
               <p className="text-muted-foreground text-lg">
-                Your centralized construction management platform
+                Your centralised construction management platform for Indian projects
               </p>
             </div>
             
@@ -171,7 +171,7 @@ const Dashboard = () => {
             <img src={logo} alt="A2Z Construction" className="h-12 w-auto" />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                A2Z Construction
+                A2Z Construction India
               </h1>
               <p className="text-sm text-muted-foreground">Management Dashboard</p>
             </div>

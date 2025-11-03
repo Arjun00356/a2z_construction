@@ -76,7 +76,7 @@ export const ProjectsSection = () => {
                 {project.budget && (
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Budget:</span>
-                    <span className="text-foreground font-medium">${Number(project.budget).toLocaleString()}</span>
+                    <span className="text-foreground font-medium">₹{Number(project.budget).toLocaleString('en-IN')}</span>
                   </div>
                 )}
                 {project.location && (

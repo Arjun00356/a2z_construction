@@ -140,7 +140,7 @@ export const PaymentsSection = () => {
                 <p className="text-xs text-muted-foreground mt-1">Due: {new Date(payment.due_date).toLocaleDateString()}</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold">${parseFloat(payment.amount).toLocaleString()}</p>
+                <p className="text-2xl font-bold">₹{parseFloat(payment.amount).toLocaleString('en-IN')}</p>
                 <Badge className={getStatusColor(payment.status)}>{payment.status}</Badge>
               </div>
             </div>

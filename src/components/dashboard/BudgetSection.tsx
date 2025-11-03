@@ -135,7 +135,7 @@ export const BudgetSection = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Total Budget</p>
-              <p className="text-2xl font-bold">${totalBudget.toLocaleString()}</p>
+              <p className="text-2xl font-bold">₹{totalBudget.toLocaleString('en-IN')}</p>
             </div>
           </div>
         </Card>
@@ -146,7 +146,7 @@ export const BudgetSection = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Total Expenses</p>
-              <p className="text-2xl font-bold">${totalExpenses.toLocaleString()}</p>
+              <p className="text-2xl font-bold">₹{totalExpenses.toLocaleString('en-IN')}</p>
             </div>
           </div>
         </Card>
@@ -157,7 +157,7 @@ export const BudgetSection = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Remaining</p>
-              <p className="text-2xl font-bold">${(totalBudget - totalExpenses).toLocaleString()}</p>
+              <p className="text-2xl font-bold">₹{(totalBudget - totalExpenses).toLocaleString('en-IN')}</p>
             </div>
           </div>
         </Card>
@@ -173,7 +173,7 @@ export const BudgetSection = () => {
                 <p className="text-xs text-primary mt-1">{expense.projects?.name} • {new Date(expense.date).toLocaleDateString()}</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-accent">${parseFloat(expense.amount).toLocaleString()}</p>
+                <p className="text-2xl font-bold text-accent">₹{parseFloat(expense.amount).toLocaleString('en-IN')}</p>
               </div>
             </div>
           </Card>

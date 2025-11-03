@@ -58,7 +58,7 @@ export const StatsOverview = () => {
     },
     {
       title: "Total Budget",
-      value: `$${stats.budget.toLocaleString()}`,
+      value: `₹${stats.budget.toLocaleString('en-IN')}`,
       icon: DollarSign,
       gradient: "from-primary to-secondary",
     },

@@ -261,6 +261,169 @@ export type Database = {
           },
         ]
       }
+      material_prices: {
+        Row: {
+          id: string
+          last_updated: string
+          material_id: string
+          price: number
+          unit: string
+          vendor_id: string
+        }
+        Insert: {
+          id?: string
+          last_updated?: string
+          material_id: string
+          price: number
+          unit: string
+          vendor_id: string
+        }
+        Update: {
+          id?: string
+          last_updated?: string
+          material_id?: string
+          price?: number
+          unit?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_prices_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_prices_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      material_requests: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          id: string
+          material_id: string
+          notes: string | null
+          project_id: string
+          quantity: number
+          requested_by: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          id?: string
+          material_id: string
+          notes?: string | null
+          project_id: string
+          quantity: number
+          requested_by: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          id?: string
+          material_id?: string
+          notes?: string | null
+          project_id?: string
+          quantity?: number
+          requested_by?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_requests_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_requests_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      material_transactions: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          material_id: string
+          notes: string | null
+          project_id: string | null
+          quantity: number
+          reference_number: string | null
+          transaction_type: string
+          unit_price: number | null
+          vendor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          material_id: string
+          notes?: string | null
+          project_id?: string | null
+          quantity: number
+          reference_number?: string | null
+          transaction_type: string
+          unit_price?: number | null
+          vendor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          material_id?: string
+          notes?: string | null
+          project_id?: string | null
+          quantity?: number
+          reference_number?: string | null
+          transaction_type?: string
+          unit_price?: number | null
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "material_transactions_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_transactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "material_transactions_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       materials: {
         Row: {
           created_at: string
@@ -527,6 +690,114 @@ export type Database = {
           },
         ]
       }
+      purchase_order_items: {
+        Row: {
+          id: string
+          material_id: string
+          purchase_order_id: string
+          quantity: number
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          id?: string
+          material_id: string
+          purchase_order_id: string
+          quantity: number
+          total_price: number
+          unit_price: number
+        }
+        Update: {
+          id?: string
+          material_id?: string
+          purchase_order_id?: string
+          quantity?: number
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_order_items_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_order_items_purchase_order_id_fkey"
+            columns: ["purchase_order_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_orders: {
+        Row: {
+          actual_delivery: string | null
+          created_at: string
+          created_by: string
+          document_url: string | null
+          expected_delivery: string | null
+          id: string
+          notes: string | null
+          order_date: string
+          po_number: string
+          project_id: string | null
+          status: string
+          total_amount: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          actual_delivery?: string | null
+          created_at?: string
+          created_by: string
+          document_url?: string | null
+          expected_delivery?: string | null
+          id?: string
+          notes?: string | null
+          order_date: string
+          po_number: string
+          project_id?: string | null
+          status?: string
+          total_amount: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          actual_delivery?: string | null
+          created_at?: string
+          created_by?: string
+          document_url?: string | null
+          expected_delivery?: string | null
+          id?: string
+          notes?: string | null
+          order_date?: string
+          po_number?: string
+          project_id?: string | null
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_orders_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       safety_checklists: {
         Row: {
           completed: boolean
@@ -718,6 +989,39 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      vendors: {
+        Row: {
+          address: string | null
+          contact_person: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          contact_person?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          contact_person?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

@@ -25,6 +25,16 @@ import logo from "@/assets/a2z-logo.png";
 import { ProjectsSection } from "@/components/dashboard/ProjectsSection";
 import { TasksSection } from "@/components/dashboard/TasksSection";
 import { StatsOverview } from "@/components/dashboard/StatsOverview";
+import { DocumentsSection } from "@/components/dashboard/DocumentsSection";
+import { BudgetSection } from "@/components/dashboard/BudgetSection";
+import { EquipmentSection } from "@/components/dashboard/EquipmentSection";
+import { MaterialsSection } from "@/components/dashboard/MaterialsSection";
+import { TicketsSection } from "@/components/dashboard/TicketsSection";
+import { PaymentsSection } from "@/components/dashboard/PaymentsSection";
+import { SafetySection } from "@/components/dashboard/SafetySection";
+import { IncidentsSection } from "@/components/dashboard/IncidentsSection";
+import { MilestonesSection } from "@/components/dashboard/MilestonesSection";
+import { TeamSection } from "@/components/dashboard/TeamSection";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -76,6 +86,26 @@ const Dashboard = () => {
         return <ProjectsSection />;
       case "tasks":
         return <TasksSection />;
+      case "documents":
+        return <DocumentsSection />;
+      case "budget":
+        return <BudgetSection />;
+      case "equipment":
+        return <EquipmentSection />;
+      case "materials":
+        return <MaterialsSection />;
+      case "tickets":
+        return <TicketsSection />;
+      case "payments":
+        return <PaymentsSection />;
+      case "safety":
+        return <SafetySection />;
+      case "incidents":
+        return <IncidentsSection />;
+      case "milestones":
+        return <MilestonesSection />;
+      case "team":
+        return <TeamSection />;
       case "overview":
       default:
         return (

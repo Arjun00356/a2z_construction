@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, FileText, Upload, Download, Edit, Trash2 } from 'lucide-react';
+import { Loader2, FileText, Upload, Download, Edit, Trash2, FolderOpen } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const DocumentsSection = () => {
   const [documents, setDocuments] = useState<any[]>([]);
@@ -24,8 +25,22 @@ export const DocumentsSection = () => {
     description: '',
     file_url: '',
     project_id: '',
-    type: 'other'
+    type: 'other',
+    category: 'other'
   });
+
+  const categories = [
+    { id: 'registry', label: 'Registry', icon: '📋' },
+    { id: 'rera_permission', label: 'RERA Permission', icon: '✅' },
+    { id: 'gda_permission', label: 'GDA Permission', icon: '🏛️' },
+    { id: 'pollution', label: 'Pollution Clearance', icon: '🌱' },
+    { id: 'customer_contract', label: 'Customer Contracts', icon: '📝' },
+    { id: 'other', label: 'Other Documents', icon: '📄' }
+  ];
+
+  const getCategoryDocuments = (categoryId: string) => {
+    return documents.filter(doc => doc.category === categoryId);
+  };
 
   useEffect(() => {
     fetchDocuments();
@@ -57,7 +72,8 @@ export const DocumentsSection = () => {
       description: doc.description || '',
       file_url: doc.file_url,
       project_id: doc.project_id,
-      type: doc.type
+      type: doc.type,
+      category: doc.category || 'other'
     });
     setIsOpen(true);
   };
@@ -89,7 +105,7 @@ export const DocumentsSection = () => {
         toast({ title: "Success", description: "Document updated" });
         setIsOpen(false);
         setEditingDoc(null);
-        setFormData({ name: '', description: '', file_url: '', project_id: '', type: 'other' });
+        setFormData({ name: '', description: '', file_url: '', project_id: '', type: 'other', category: 'other' });
         fetchDocuments();
       }
     } else {
@@ -110,7 +126,7 @@ export const DocumentsSection = () => {
       } else {
         toast({ title: "Success", description: "Document added successfully" });
         setIsOpen(false);
-        setFormData({ name: '', description: '', file_url: '', project_id: '', type: 'other' });
+        setFormData({ name: '', description: '', file_url: '', project_id: '', type: 'other', category: 'other' });
         fetchDocuments();
       }
     }
@@ -129,28 +145,43 @@ export const DocumentsSection = () => {
           setIsOpen(open);
           if (!open) {
             setEditingDoc(null);
-            setFormData({ name: '', description: '', file_url: '', project_id: '', type: 'other' });
+            setFormData({ name: '', description: '', file_url: '', project_id: '', type: 'other', category: 'other' });
           }
         }}>
           <DialogTrigger asChild>
             <Button className="cyber-button"><Upload className="w-4 h-4 mr-2" />Upload Document</Button>
           </DialogTrigger>
-          <DialogContent className="glass-card border-primary/20">
+          <DialogContent className="glass-card border-primary/20 max-w-2xl">
             <DialogHeader>
               <DialogTitle>{editingDoc ? 'Edit Document' : 'Upload New Document'}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label>Document Name</Label>
-                <Input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Document Name</Label>
+                  <Input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                </div>
+                <div>
+                  <Label>Category</Label>
+                  <select 
+                    className="w-full px-3 py-2 border rounded-md bg-background"
+                    value={formData.category}
+                    onChange={(e) => setFormData({...formData, category: e.target.value})}
+                    required
+                  >
+                    {categories.map(cat => (
+                      <option key={cat.id} value={cat.id}>{cat.icon} {cat.label}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div>
                 <Label>Description</Label>
-                <Textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
+                <Textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows={3} />
               </div>
               <div>
                 <Label>File URL</Label>
-                <Input value={formData.file_url} onChange={(e) => setFormData({...formData, file_url: e.target.value})} required />
+                <Input value={formData.file_url} onChange={(e) => setFormData({...formData, file_url: e.target.value})} placeholder="https://example.com/document.pdf" required />
               </div>
               <div>
                 <Label>Project</Label>
@@ -164,39 +195,91 @@ export const DocumentsSection = () => {
                   {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                 </select>
               </div>
-              <Button type="submit" className="w-full">{editingDoc ? 'Update' : 'Upload'}</Button>
+              <Button type="submit" className="w-full cyber-button">{editingDoc ? 'Update Document' : 'Upload Document'}</Button>
             </form>
           </DialogContent>
         </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {documents.map((doc) => (
-          <Card key={doc.id} className="glass-card border-primary/20 p-6 hover:border-accent transition-all">
-            <div className="flex items-start gap-4">
-              <FileText className="w-10 h-10 text-accent" />
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg">{doc.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{doc.description}</p>
-                <p className="text-xs text-primary mt-2">{doc.projects?.name}</p>
-                <div className="flex gap-2 mt-3">
-                  <Button size="sm" variant="outline" asChild>
-                    <a href={doc.file_url} target="_blank" rel="noopener noreferrer">
-                      <Download className="w-3 h-3 mr-1" />Download
-                    </a>
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => handleEdit(doc)}>
-                    <Edit className="w-3 h-3" />
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={() => setDeleteId(doc.id)}>
-                    <Trash2 className="w-3 h-3" />
-                  </Button>
-                </div>
-              </div>
+      <Tabs defaultValue="registry" className="w-full">
+        <TabsList className="grid grid-cols-3 lg:grid-cols-6 w-full">
+          {categories.map(cat => (
+            <TabsTrigger key={cat.id} value={cat.id} className="text-xs sm:text-sm">
+              <span className="mr-1">{cat.icon}</span>
+              <span className="hidden sm:inline">{cat.label}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        {categories.map(category => (
+          <TabsContent key={category.id} value={category.id} className="mt-6">
+            <div className="mb-4">
+              <h3 className="text-xl font-semibold flex items-center gap-2">
+                <FolderOpen className="w-5 h-5 text-primary" />
+                {category.label}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {getCategoryDocuments(category.id).length} document(s) in this category
+              </p>
             </div>
-          </Card>
+            
+            {getCategoryDocuments(category.id).length === 0 ? (
+              <Card className="glass-card border-primary/20 p-12 text-center">
+                <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+                <p className="text-muted-foreground">No documents in this category yet</p>
+                <Button 
+                  variant="outline" 
+                  className="mt-4"
+                  onClick={() => {
+                    setFormData({ ...formData, category: category.id });
+                    setIsOpen(true);
+                  }}
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload First Document
+                </Button>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {getCategoryDocuments(category.id).map((doc) => (
+                  <Card key={doc.id} className="glass-card border-primary/20 p-6 hover:border-accent transition-all hover:shadow-lg">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-primary/10 rounded-lg">
+                        <FileText className="w-8 h-8 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-lg truncate">{doc.name}</h3>
+                        {doc.description && (
+                          <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{doc.description}</p>
+                        )}
+                        <p className="text-xs text-primary mt-2 font-medium">{doc.projects?.name}</p>
+                        {doc.file_size && (
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Size: {(doc.file_size / 1024 / 1024).toFixed(2)} MB
+                          </p>
+                        )}
+                        <div className="flex gap-2 mt-4">
+                          <Button size="sm" variant="outline" className="flex-1" asChild>
+                            <a href={doc.file_url} target="_blank" rel="noopener noreferrer">
+                              <Download className="w-3 h-3 mr-1" />Download
+                            </a>
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => handleEdit(doc)}>
+                            <Edit className="w-3 h-3" />
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => setDeleteId(doc.id)}>
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
         ))}
-      </div>
+      </Tabs>
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
         <AlertDialogContent>

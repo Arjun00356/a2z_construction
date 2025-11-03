@@ -1,4 +1,5 @@
 import { Palette, Hammer, ClipboardCheck, Wrench, RefreshCcw } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import interiorImg from "@/assets/service-interior.jpg";
 import constructionImg from "@/assets/service-construction.jpg";
 import consultancyImg from "@/assets/service-consultancy.jpg";
@@ -9,29 +10,35 @@ const services = [
     icon: Palette,
     title: "Interior Design",
     description: "Transform spaces with innovative and sustainable interior design solutions tailored to your needs.",
-    image: interiorImg
+    image: interiorImg,
+    link: "/services/interior-design"
   },
   {
     icon: Hammer,
     title: "Construction Management",
     description: "Comprehensive project management ensuring timely delivery and quality control at every stage.",
-    image: constructionImg
+    image: constructionImg,
+    link: "/services/construction-management"
   },
   {
     icon: ClipboardCheck,
     title: "Consultancy",
     description: "Expert consultation services to guide your construction projects from concept to completion.",
-    image: consultancyImg
+    image: consultancyImg,
+    link: "/services/consultancy"
   },
   {
     icon: Wrench,
     title: "Retrofitting",
     description: "Upgrade existing structures with modern, energy-efficient, and sustainable solutions.",
-    image: retrofittingImg
+    image: retrofittingImg,
+    link: "/services/retrofitting"
   }
 ];
 
 const Services = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="services" className="py-24 px-6 bg-muted/30">
       <div className="max-w-7xl mx-auto">
@@ -50,6 +57,7 @@ const Services = () => {
                 key={index}
                 className="group cursor-pointer animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
+                onClick={() => navigate(service.link)}
               >
                 <div className="aspect-square bg-background mb-6 overflow-hidden border border-border group-hover:border-primary/50 transition-colors">
                   <img 

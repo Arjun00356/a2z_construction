@@ -4,8 +4,9 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Ticket, AlertCircle } from 'lucide-react';
+import { Loader2, Ticket, AlertCircle, Edit, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +16,8 @@ export const TicketsSection = () => {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [editingTicket, setEditingTicket] = useState<any>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
@@ -48,27 +51,69 @@ export const TicketsSection = () => {
     setProjects(data || []);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { data: { user } } = await supabase.auth.getUser();
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('user_id', user?.id)
-      .single();
-
-    const { error } = await supabase.from('tickets').insert({
-      ...formData,
-      created_by: profile?.id
+  const handleEdit = (ticket: any) => {
+    setEditingTicket(ticket);
+    setFormData({
+      project_id: ticket.project_id,
+      title: ticket.title,
+      description: ticket.description,
+      priority: ticket.priority,
+      status: ticket.status
     });
+    setIsOpen(true);
+  };
 
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    const { error } = await supabase.from('tickets').delete().eq('id', deleteId);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Success", description: "Ticket created successfully" });
-      setIsOpen(false);
-      setFormData({ project_id: '', title: '', description: '', priority: 'medium', status: 'open' });
+      toast({ title: "Success", description: "Ticket deleted" });
+      setDeleteId(null);
       fetchTickets();
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (editingTicket) {
+      const { error } = await supabase
+        .from('tickets')
+        .update(formData)
+        .eq('id', editingTicket.id);
+      
+      if (error) {
+        toast({ title: "Error", description: error.message, variant: "destructive" });
+      } else {
+        toast({ title: "Success", description: "Ticket updated" });
+        setIsOpen(false);
+        setEditingTicket(null);
+        setFormData({ project_id: '', title: '', description: '', priority: 'medium', status: 'open' });
+        fetchTickets();
+      }
+    } else {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('user_id', user?.id)
+        .single();
+
+      const { error } = await supabase.from('tickets').insert({
+        ...formData,
+        created_by: profile?.id
+      });
+
+      if (error) {
+        toast({ title: "Error", description: error.message, variant: "destructive" });
+      } else {
+        toast({ title: "Success", description: "Ticket created successfully" });
+        setIsOpen(false);
+        setFormData({ project_id: '', title: '', description: '', priority: 'medium', status: 'open' });
+        fetchTickets();
+      }
     }
   };
 
@@ -99,13 +144,19 @@ export const TicketsSection = () => {
           <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Support Tickets</h2>
           <p className="text-muted-foreground mt-1">Manage client requests and issues</p>
         </div>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <Dialog open={isOpen} onOpenChange={(open) => {
+          setIsOpen(open);
+          if (!open) {
+            setEditingTicket(null);
+            setFormData({ project_id: '', title: '', description: '', priority: 'medium', status: 'open' });
+          }
+        }}>
           <DialogTrigger asChild>
             <Button className="cyber-button"><Ticket className="w-4 h-4 mr-2" />New Ticket</Button>
           </DialogTrigger>
           <DialogContent className="glass-card border-primary/20">
             <DialogHeader>
-              <DialogTitle>Create Support Ticket</DialogTitle>
+              <DialogTitle>{editingTicket ? 'Edit Ticket' : 'Create Support Ticket'}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -140,7 +191,21 @@ export const TicketsSection = () => {
                   <option value="high">High</option>
                 </select>
               </div>
-              <Button type="submit" className="w-full">Create Ticket</Button>
+              {editingTicket && (
+                <div>
+                  <Label>Status</Label>
+                  <select 
+                    className="w-full px-3 py-2 border rounded-md bg-background"
+                    value={formData.status}
+                    onChange={(e) => setFormData({...formData, status: e.target.value})}
+                  >
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                  </select>
+                </div>
+              )}
+              <Button type="submit" className="w-full">{editingTicket ? 'Update Ticket' : 'Create Ticket'}</Button>
             </form>
           </DialogContent>
         </Dialog>
@@ -156,13 +221,38 @@ export const TicketsSection = () => {
                 <p className="text-xs text-primary mt-2">{ticket.projects?.name}</p>
               </div>
               <div className="flex flex-col gap-2">
-                <Badge className={getPriorityColor(ticket.priority)}>{ticket.priority}</Badge>
-                <Badge className={getStatusColor(ticket.status)}>{ticket.status.replace('_', ' ')}</Badge>
+                <div className="flex gap-2">
+                  <Badge className={getPriorityColor(ticket.priority)}>{ticket.priority}</Badge>
+                  <Badge className={getStatusColor(ticket.status)}>{ticket.status.replace('_', ' ')}</Badge>
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" onClick={() => handleEdit(ticket)}>
+                    <Edit className="w-3 h-3" />
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => setDeleteId(ticket.id)}>
+                    <Trash2 className="w-3 h-3" />
+                  </Button>
+                </div>
               </div>
             </div>
           </Card>
         ))}
       </div>
+
+      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Ticket</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this ticket? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

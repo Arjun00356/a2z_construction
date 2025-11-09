@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -10,10 +11,12 @@ import Footer from "@/components/Footer";
 import { CostPredictorChat } from "@/components/CostPredictorChat";
 
 const Home = () => {
+  const [isCostEstimatorOpen, setIsCostEstimatorOpen] = useState(false);
+
   return (
     <div className="min-h-screen">
       <Navigation />
-      <Hero />
+      <Hero onOpenCostEstimator={() => setIsCostEstimatorOpen(true)} />
       <About />
       <LatestProjects />
       <FeaturedProjects />
@@ -21,7 +24,10 @@ const Home = () => {
       <Newsletter />
       <Contact />
       <Footer />
-      <CostPredictorChat />
+      <CostPredictorChat 
+        isOpen={isCostEstimatorOpen} 
+        onOpenChange={setIsCostEstimatorOpen} 
+      />
     </div>
   );
 };

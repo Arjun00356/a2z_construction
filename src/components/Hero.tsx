@@ -2,10 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
 import ServiceSelectionDialog from "./ServiceSelectionDialog";
+import { Calculator } from "lucide-react";
 
-const Hero = () => {
+interface HeroProps {
+  onOpenCostEstimator?: () => void;
+}
+
+const Hero = ({ onOpenCostEstimator }: HeroProps) => {
   const [showServiceDialog, setShowServiceDialog] = useState(false);
-
 
   return (
     <>
@@ -22,6 +26,17 @@ const Hero = () => {
           <h1 className="text-2xl md:text-3xl font-light text-foreground mb-4 tracking-wide">
             CONSTRUCTION
           </h1>
+          <p className="text-foreground/80 mb-8 max-w-2xl text-lg">
+            Building your dreams with precision and expertise. Get instant cost estimates for your next project.
+          </p>
+          <Button 
+            onClick={onOpenCostEstimator}
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all"
+          >
+            <Calculator className="mr-2 h-5 w-5" />
+            Get Free Cost Estimate
+          </Button>
         </div>
       </section>
 

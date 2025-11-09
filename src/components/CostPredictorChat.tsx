@@ -11,8 +11,13 @@ interface Message {
   content: string;
 }
 
-export const CostPredictorChat = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface CostPredictorChatProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export const CostPredictorChat = ({ isOpen, onOpenChange }: CostPredictorChatProps) => {
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -125,7 +130,7 @@ export const CostPredictorChat = () => {
       {/* Floating Chat Button */}
       {!isOpen && (
         <Button
-          onClick={() => setIsOpen(true)}
+          onClick={() => onOpenChange(true)}
           className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90 z-50"
           size="icon"
         >
@@ -143,7 +148,7 @@ export const CostPredictorChat = () => {
               <p className="text-xs opacity-90">AI-powered construction estimates</p>
             </div>
             <Button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onOpenChange(false)}
               variant="ghost"
               size="icon"
               className="text-primary-foreground hover:bg-primary-foreground/20"

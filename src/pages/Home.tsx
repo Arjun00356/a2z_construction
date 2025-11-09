@@ -7,6 +7,7 @@ import Services from "@/components/Services";
 import Newsletter from "@/components/Newsletter";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { CostPredictorChat } from "@/components/CostPredictorChat";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <Newsletter />
       <Contact />
       <Footer />
+      <CostPredictorChat />
     </div>
   );
 };

@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, fullName: string, role: 'admin' | 'engineer' | 'client') => Promise<{ error: any }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   loading: boolean;
 }
@@ -46,43 +46,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return { error };
   };
 
-  const signUp = async (email: string, password: string, fullName: string, role: 'admin' | 'engineer' | 'client') => {
+  const signUp = async (email: string, password: string, fullName: string) => {
     const redirectUrl = `${window.location.origin}/dashboard`;
     
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: redirectUrl,
         data: {
           full_name: fullName,
-          role: role,
         },
       },
     });
-
-    // Assign role to user in user_roles table
-    if (!error && data.user) {
-      // Wait a bit for the profile to be created by the trigger
-      setTimeout(async () => {
-        try {
-          const { data: profileData } = await supabase
-            .from('profiles')
-            .select('id')
-            .eq('user_id', data.user!.id)
-            .single();
-
-          if (profileData) {
-            await supabase
-              .from('user_roles')
-              .insert({ user_id: profileData.id, role: role });
-          }
-        } catch (err) {
-          console.error('Error assigning role:', err);
-        }
-      }, 1000);
-    }
-
     return { error };
   };
 

@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import loginBg from "@/assets/login-bg.jpg";
 import logo from "@/assets/a2z-logo.png";
 
@@ -18,7 +17,6 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState<string>("client");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -39,7 +37,7 @@ const SignUp = () => {
     }
     
     setLoading(true);
-    const { error } = await signUp(email, password, name, role as 'admin' | 'engineer' | 'client');
+    const { error } = await signUp(email, password, name);
     
     if (error) {
       toast({
@@ -75,20 +73,6 @@ const SignUp = () => {
         
         <CardContent>
           <form onSubmit={handleSignUp} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="role" className="text-foreground">Register As</Label>
-              <Select value={role} onValueChange={setRole}>
-                <SelectTrigger className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]">
-                  <SelectValue placeholder="Select your role" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border-border z-50">
-                  <SelectItem value="client">Client</SelectItem>
-                  <SelectItem value="engineer">Site Engineer</SelectItem>
-                  <SelectItem value="admin">Builder/Admin</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="name" className="text-foreground">Full Name</Label>
               <Input

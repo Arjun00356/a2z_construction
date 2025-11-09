@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import { 
   LayoutDashboard, 
   FolderKanban, 
@@ -39,6 +40,7 @@ import { TeamSection } from "@/components/dashboard/TeamSection";
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, signOut, loading } = useAuth();
+  const { isAdmin, isEngineer, isClient, loading: roleLoading } = useUserRole();
   const [activeSection, setActiveSection] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -53,7 +55,7 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  if (loading) {
+  if (loading || roleLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center space-y-4">
@@ -64,21 +66,30 @@ const Dashboard = () => {
     );
   }
 
-  const menuItems = [
-    { id: "overview", title: "Dashboard Overview", icon: LayoutDashboard },
-    { id: "projects", title: "Projects", icon: FolderKanban },
-    { id: "tasks", title: "Tasks", icon: CheckSquare },
-    { id: "documents", title: "Documents", icon: FileText },
-    { id: "budget", title: "Budget & Expenses", icon: DollarSign },
-    { id: "equipment", title: "Equipment", icon: Truck },
-    { id: "materials", title: "Materials", icon: Package },
-    { id: "tickets", title: "Support Tickets", icon: Ticket },
-    { id: "payments", title: "Payments", icon: CreditCard },
-    { id: "safety", title: "Safety Compliance", icon: ShieldAlert },
-    { id: "incidents", title: "Incidents", icon: AlertTriangle },
-    { id: "milestones", title: "Milestones", icon: Flag },
-    { id: "team", title: "Team Directory", icon: Users },
+  // Define all menu items with role-based access
+  const allMenuItems = [
+    { id: "overview", title: "Dashboard Overview", icon: LayoutDashboard, roles: ['admin', 'engineer', 'client'] },
+    { id: "projects", title: "Projects", icon: FolderKanban, roles: ['admin', 'engineer', 'client'] },
+    { id: "tasks", title: "Tasks", icon: CheckSquare, roles: ['admin', 'engineer'] },
+    { id: "documents", title: "Documents", icon: FileText, roles: ['admin', 'engineer', 'client'] },
+    { id: "budget", title: "Budget & Expenses", icon: DollarSign, roles: ['admin'] },
+    { id: "equipment", title: "Equipment", icon: Truck, roles: ['admin', 'engineer'] },
+    { id: "materials", title: "Materials", icon: Package, roles: ['admin', 'engineer'] },
+    { id: "tickets", title: "Support Tickets", icon: Ticket, roles: ['admin', 'engineer', 'client'] },
+    { id: "payments", title: "Payments", icon: CreditCard, roles: ['admin'] },
+    { id: "safety", title: "Safety Compliance", icon: ShieldAlert, roles: ['admin', 'engineer'] },
+    { id: "incidents", title: "Incidents", icon: AlertTriangle, roles: ['admin', 'engineer'] },
+    { id: "milestones", title: "Milestones", icon: Flag, roles: ['admin', 'engineer', 'client'] },
+    { id: "team", title: "Team Directory", icon: Users, roles: ['admin'] },
   ];
+
+  // Filter menu items based on user role
+  const menuItems = allMenuItems.filter(item => {
+    if (isAdmin) return true; // Admin sees everything
+    if (isEngineer) return item.roles.includes('engineer');
+    if (isClient) return item.roles.includes('client');
+    return false;
+  });
 
   const renderContent = () => {
     switch (activeSection) {

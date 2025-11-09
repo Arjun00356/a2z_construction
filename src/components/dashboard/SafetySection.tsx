@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, ShieldCheck, CheckCircle2, ClipboardCheck, FileText, AlertTriangle, XCircle } from 'lucide-react';
+import { checklistSchema, inspectionSchema, qualityFormSchema, auditSchema, ncrSchema } from '@/lib/validation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -106,7 +107,17 @@ export const SafetySection = () => {
 
   const handleChecklistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from('safety_checklists').insert(checklistForm);
+    const validationResult = checklistSchema.safeParse(checklistForm);
+    if (!validationResult.success) {
+      toast({ title: "Validation Error", description: validationResult.error.errors[0].message, variant: "destructive" });
+      return;
+    }
+    const trimmedData = {
+      ...checklistForm,
+      title: checklistForm.title.trim(),
+      description: checklistForm.description?.trim() || '',
+    };
+    const { error } = await supabase.from('safety_checklists').insert(trimmedData);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
@@ -119,7 +130,18 @@ export const SafetySection = () => {
 
   const handleInspectionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from('site_inspections').insert(inspectionForm);
+    const validationResult = inspectionSchema.safeParse(inspectionForm);
+    if (!validationResult.success) {
+      toast({ title: "Validation Error", description: validationResult.error.errors[0].message, variant: "destructive" });
+      return;
+    }
+    const trimmedData = {
+      ...inspectionForm,
+      inspector_name: inspectionForm.inspector_name.trim(),
+      area: inspectionForm.area.trim(),
+      findings: inspectionForm.findings?.trim() || '',
+    };
+    const { error } = await supabase.from('site_inspections').insert(trimmedData);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
@@ -132,10 +154,22 @@ export const SafetySection = () => {
 
   const handleQualitySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const validationResult = qualityFormSchema.safeParse(qualityForm);
+    if (!validationResult.success) {
+      toast({ title: "Validation Error", description: validationResult.error.errors[0].message, variant: "destructive" });
+      return;
+    }
     const { data: { user } } = await supabase.auth.getUser();
     const { data: profile } = await supabase.from('profiles').select('id').eq('user_id', user?.id).single();
     
-    const { error } = await supabase.from('quality_forms').insert({ ...qualityForm, submitted_by: profile?.id });
+    const trimmedData = {
+      ...qualityForm,
+      reference_number: qualityForm.reference_number.trim(),
+      title: qualityForm.title.trim(),
+      description: qualityForm.description?.trim() || '',
+    };
+    
+    const { error } = await supabase.from('quality_forms').insert({ ...trimmedData, submitted_by: profile?.id });
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
@@ -148,7 +182,18 @@ export const SafetySection = () => {
 
   const handleAuditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from('safety_audits').insert(auditForm);
+    const validationResult = auditSchema.safeParse(auditForm);
+    if (!validationResult.success) {
+      toast({ title: "Validation Error", description: validationResult.error.errors[0].message, variant: "destructive" });
+      return;
+    }
+    const trimmedData = {
+      ...auditForm,
+      auditor_name: auditForm.auditor_name.trim(),
+      findings: auditForm.findings.trim(),
+      corrective_action: auditForm.corrective_action?.trim() || '',
+    };
+    const { error } = await supabase.from('safety_audits').insert(trimmedData);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
@@ -161,10 +206,25 @@ export const SafetySection = () => {
 
   const handleNcrSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const validationResult = ncrSchema.safeParse(ncrForm);
+    if (!validationResult.success) {
+      toast({ title: "Validation Error", description: validationResult.error.errors[0].message, variant: "destructive" });
+      return;
+    }
     const { data: { user } } = await supabase.auth.getUser();
     const { data: profile } = await supabase.from('profiles').select('id').eq('user_id', user?.id).single();
     
-    const { error } = await supabase.from('ncr_reports').insert({ ...ncrForm, raised_by: profile?.id });
+    const trimmedData = {
+      ...ncrForm,
+      ncr_number: ncrForm.ncr_number.trim(),
+      title: ncrForm.title.trim(),
+      description: ncrForm.description.trim(),
+      category: ncrForm.category.trim(),
+      corrective_action: ncrForm.corrective_action?.trim() || '',
+      root_cause: ncrForm.root_cause?.trim() || '',
+    };
+    
+    const { error } = await supabase.from('ncr_reports').insert({ ...trimmedData, raised_by: profile?.id });
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {

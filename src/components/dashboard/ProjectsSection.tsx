@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2, Edit, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { projectSchema } from "@/lib/validation";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -97,13 +98,25 @@ export const ProjectsSection = () => {
     e.preventDefault();
     
     try {
+      // Validate form data
+      const validationResult = projectSchema.safeParse(formData);
+      if (!validationResult.success) {
+        const errorMessage = validationResult.error.errors[0].message;
+        toast({
+          title: "Validation Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
       const projectData = {
-        name: formData.name,
-        description: formData.description || null,
-        location: formData.location || null,
+        name: formData.name.trim(),
+        description: formData.description?.trim() || null,
+        location: formData.location?.trim() || null,
         budget: formData.budget ? parseFloat(formData.budget) : null,
         status: formData.status,
         start_date: formData.start_date || null,
@@ -280,6 +293,7 @@ export const ProjectsSection = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
+                  maxLength={100}
                   placeholder="e.g., Indirapuram Commercial Hub"
                 />
               </div>
@@ -309,6 +323,7 @@ export const ProjectsSection = () => {
                 id="location"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                maxLength={200}
                 placeholder="e.g., Vaishali Sector 4, Ghaziabad, UP"
               />
             </div>
@@ -319,6 +334,7 @@ export const ProjectsSection = () => {
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                maxLength={1000}
                 placeholder="Project details..."
                 rows={3}
               />
@@ -330,6 +346,8 @@ export const ProjectsSection = () => {
                 <Input
                   id="budget"
                   type="number"
+                  min="0"
+                  max="999999999999"
                   value={formData.budget}
                   onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                   placeholder="0"

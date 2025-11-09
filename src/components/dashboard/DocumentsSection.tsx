@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, FileText, Upload, Download, Edit, Trash2, FolderOpen } from 'lucide-react';
+import { documentSchema } from '@/lib/validation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
@@ -93,10 +94,25 @@ export const DocumentsSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate form data
+    const validationResult = documentSchema.safeParse(formData);
+    if (!validationResult.success) {
+      const errorMessage = validationResult.error.errors[0].message;
+      toast({ title: "Validation Error", description: errorMessage, variant: "destructive" });
+      return;
+    }
+
+    const trimmedData = {
+      ...formData,
+      name: formData.name.trim(),
+      description: formData.description?.trim() || '',
+      file_url: formData.file_url.trim(),
+    };
+    
     if (editingDoc) {
       const { error } = await supabase
         .from('documents')
-        .update(formData)
+        .update(trimmedData)
         .eq('id', editingDoc.id);
       
       if (error) {
@@ -117,7 +133,7 @@ export const DocumentsSection = () => {
         .single();
 
       const { error } = await supabase.from('documents').insert({
-        ...formData,
+        ...trimmedData,
         uploaded_by: profile?.id
       });
 
@@ -158,8 +174,8 @@ export const DocumentsSection = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label>Document Name</Label>
-                  <Input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+                  <Label>Document Name *</Label>
+                  <Input value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} maxLength={200} required />
                 </div>
                 <div>
                   <Label>Category</Label>
@@ -177,11 +193,11 @@ export const DocumentsSection = () => {
               </div>
               <div>
                 <Label>Description</Label>
-                <Textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows={3} />
+                <Textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} maxLength={500} rows={3} />
               </div>
               <div>
-                <Label>File URL</Label>
-                <Input value={formData.file_url} onChange={(e) => setFormData({...formData, file_url: e.target.value})} placeholder="https://example.com/document.pdf" required />
+                <Label>File URL *</Label>
+                <Input value={formData.file_url} onChange={(e) => setFormData({...formData, file_url: e.target.value})} maxLength={500} placeholder="https://example.com/document.pdf" required />
               </div>
               <div>
                 <Label>Project</Label>

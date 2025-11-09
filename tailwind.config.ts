@@ -61,6 +61,22 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      backgroundImage: {
+        'gradient-primary': 'var(--gradient-primary)',
+        'gradient-card': 'var(--gradient-card)',
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-glow': 'var(--gradient-glow)',
+        'gradient-border': 'var(--gradient-border)',
+      },
+      boxShadow: {
+        'neon': 'var(--shadow-neon)',
+        'card': 'var(--shadow-card)',
+        'elevation': 'var(--shadow-elevation)',
+      },
+      transitionDuration: {
+        'smooth': 'var(--transition-smooth)',
+        'slow': 'var(--transition-slow)',
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

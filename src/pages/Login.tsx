@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import loginBg from "@/assets/login-bg.jpg";
 import logo from "@/assets/a2z-logo.png";
 
@@ -15,6 +16,7 @@ const Login = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<string>("admin");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -59,6 +61,20 @@ const Login = () => {
         
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="role" className="text-foreground">Login As</Label>
+              <Select value={role} onValueChange={setRole}>
+                <SelectTrigger className="bg-background border-border focus:ring-primary transition-[var(--transition-smooth)]">
+                  <SelectValue placeholder="Select your role" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover border-border z-50">
+                  <SelectItem value="admin">Builder/Admin</SelectItem>
+                  <SelectItem value="client">Client</SelectItem>
+                  <SelectItem value="engineer">Site Engineer</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="email" className="text-foreground">Email</Label>
               <Input

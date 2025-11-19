@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { materialSchema, vendorSchema } from '@/lib/validation';
 
 export const MaterialsSection = () => {
   const [materials, setMaterials] = useState<any[]>([]);
@@ -123,13 +124,20 @@ export const MaterialsSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    const validation = materialSchema.safeParse(formData);
+    if (!validation.success) {
+      const errorMessage = validation.error.errors[0]?.message || "Invalid input";
+      toast({ title: "Validation Error", description: errorMessage, variant: "destructive" });
+      return;
+    }
+    
     if (editingMaterial) {
       const { error } = await supabase
         .from('materials')
         .update({
-          ...formData,
-          quantity: parseInt(formData.quantity),
-          reorder_level: parseInt(formData.reorder_level)
+          ...validation.data,
+          quantity: parseInt(validation.data.quantity),
+          reorder_level: parseInt(validation.data.reorder_level)
         })
         .eq('id', editingMaterial.id);
       
@@ -144,9 +152,9 @@ export const MaterialsSection = () => {
       }
     } else {
       const { error } = await supabase.from('materials').insert({
-        ...formData,
-        quantity: parseInt(formData.quantity),
-        reorder_level: parseInt(formData.reorder_level)
+        ...validation.data,
+        quantity: parseInt(validation.data.quantity),
+        reorder_level: parseInt(validation.data.reorder_level)
       });
 
       if (error) {
@@ -162,7 +170,15 @@ export const MaterialsSection = () => {
 
   const handleVendorSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from('vendors').insert(vendorForm);
+    
+    const validation = vendorSchema.safeParse(vendorForm);
+    if (!validation.success) {
+      const errorMessage = validation.error.errors[0]?.message || "Invalid input";
+      toast({ title: "Validation Error", description: errorMessage, variant: "destructive" });
+      return;
+    }
+    
+    const { error } = await supabase.from('vendors').insert(validation.data);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
